@@ -16,6 +16,12 @@ class BATTLETANKS_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 	
 public:
+	UPROPERTY(EditAnywhere)
+		float CrosshairX = 0.5;
+
+	UPROPERTY(EditAnywhere)
+		float CrosshairY = 0.33333;
+
 	ATank* GetControlledTank() const;
 
 	void BeginPlay() override;
