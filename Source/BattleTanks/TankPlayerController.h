@@ -32,4 +32,5 @@ public:
 	// Move tank barrel towards crosshair
 	void AimTowardsCrosshair();
 	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
+	bool GetLookDirection(FVector2D ScreenLocation, FVector& OutLookDirection) const;
 };
