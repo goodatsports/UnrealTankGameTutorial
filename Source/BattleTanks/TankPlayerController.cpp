@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankPlayerController.h"
+#include "Engine/World.h"
 
 void ATankPlayerController::BeginPlay() {
 	Super::BeginPlay();
@@ -33,8 +34,8 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector OutHitLocation; // Out param
 	if (GetSightRayHitLocation(OutHitLocation))// Has side-effect, is going to line trace
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("Look direction: %s"), *OutHitLocation.ToString());
-		// TODO Tell controlled tank to aim at this position
+		UE_LOG(LogTemp, Warning, TEXT("HIT LOCATION: %s"), *OutHitLocation.ToString());
+		GetControlledTank()->AimAt(OutHitLocation);
 	}
 
 }
@@ -51,9 +52,9 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	FVector OutLookDirection;
 	if (GetLookDirection(ScreenLocation, OutLookDirection))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Look Direction: %s"), *OutLookDirection.ToString());
+		// Line trace along look direction and see what intersects (up to a max range)
+		GetLookVectorHitLocation(OutLookDirection, OutHitLocation);
 	}
-	// Line trace along look direction and see what intersects (up to a max range)
 
 	return true;
 }
@@ -63,5 +64,22 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& 
 	FVector WorldLocation; // Not used
 	return DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y,
 		WorldLocation, OutLookDirection);
+}
 
+bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& OutHitLocation) const
+{
+	/// Setup query parameters for raytrace
+	FCollisionQueryParams TraceParameters(FName(TEXT("")), false, GetOwner());
+	FHitResult HitResult;
+	auto StartLocation = PlayerCameraManager->GetCameraLocation();
+	auto EndLocation = StartLocation + (LookDirection * LineTraceRange);
+
+	if (GetWorld()->LineTraceSingleByChannel(HitResult,
+		StartLocation,
+		EndLocation, ECC_Visibility,
+		TraceParameters)) {
+		OutHitLocation = HitResult.Location;
+		return true;
+	}
+	return false;
 }

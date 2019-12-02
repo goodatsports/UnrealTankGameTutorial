@@ -1,6 +1,19 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAIController.h"
+#include "Engine/World.h"
+#include "Tank.h"
+
+void ATankAIController::Tick(float DeltaTime) 
+{
+
+	Super::Tick(DeltaTime);
+	if (GetPlayerTank()) 
+	{
+		// Aim at Player Tank if present
+		GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+	}
+}
 
 void ATankAIController::BeginPlay() {
 	Super::BeginPlay();
