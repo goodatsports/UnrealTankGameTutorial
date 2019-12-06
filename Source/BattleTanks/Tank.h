@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "TankAimingComponent.h"
 #include "Tank.generated.h"
 
 UCLASS()
@@ -24,7 +25,17 @@ public:
 	// What LineTrace is aiming at
 	void AimAt(FVector HitLocation);
 
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float LaunchSpeed = 100000.0;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	UTankAimingComponent* TankAimingComponent = nullptr;
+
+	
+
 };

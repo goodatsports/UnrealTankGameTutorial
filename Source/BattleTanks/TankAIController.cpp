@@ -2,6 +2,7 @@
 
 #include "TankAIController.h"
 #include "Engine/World.h"
+#include "TankAimingComponent.h"
 #include "Tank.h"
 
 void ATankAIController::Tick(float DeltaTime) 
@@ -11,7 +12,7 @@ void ATankAIController::Tick(float DeltaTime)
 	if (GetPlayerTank()) 
 	{
 		// Aim at Player Tank if present
-		GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+		//GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
 	}
 }
 
@@ -23,7 +24,7 @@ void ATankAIController::BeginPlay() {
 		UE_LOG(LogTemp, Warning, TEXT("AIController did not find player tank"));
 	}
 	else {
-		UE_LOG(LogTemp, Warning, TEXT("AI CONTROLLER foundplayer: %s"), *(PlayerTank->GetName()));
+		UE_LOG(LogTemp, Warning, TEXT("AI CONTROLLER found player: %s"), *(PlayerTank->GetName()));
 	}
 }
 
