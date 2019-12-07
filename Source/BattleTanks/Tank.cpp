@@ -42,7 +42,6 @@ void ATank::AimAt(FVector HitLocation)
 {
 	//UE_LOG(LogTemp, Warning, TEXT("%s"), LaunchSpeed);
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
-	UE_LOG(LogTemp, Warning, TEXT("Firing at %f"), LaunchSpeed);
 }
 
 void ATank::SetBarrelReference(UStaticMeshComponent* BarrelToSet)
