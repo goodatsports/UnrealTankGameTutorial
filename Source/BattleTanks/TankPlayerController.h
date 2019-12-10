@@ -23,7 +23,7 @@ public:
 		float CrosshairY = 0.33333;
 
 	UPROPERTY(EditAnywhere)
-		float LineTraceRange = 10000000;
+		float LineTraceRange = 100000000;
 
 	ATank* GetControlledTank() const;
 
