@@ -3,7 +3,7 @@
 #include "TankBarrel.h"
 
 // Rotate Barrel Mesh Component some amount towards Aim Direction
-void UTankBarrel::Elevate(float DegreesPerSecond)
+void UTankBarrel::Elevate(float RelativeSpeed)
 {
 	
 }
