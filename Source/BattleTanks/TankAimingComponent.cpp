@@ -4,6 +4,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/Actor.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -52,12 +53,25 @@ void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 	Barrel = BarrelToSet;
 }
 
+void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
+{
+	Turret = TurretToSet;
+}
+
 void UTankAimingComponent::MoveBarrel(FVector AimDirection)
 {
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 	// If Barrel Mesh Direction != Aim Direction
-	Barrel->Elevate(2);
-	// Else do nothing
+	Barrel->Elevate(DeltaRotator.Pitch);
+}
+
+void UTankAimingComponent::MoveTurret(FVector AimDirection)
+{
+	auto TurretRotator = Turret->GetForwardVector().Rotation();
+	auto AimAsRotator = AimDirection.Rotation();
+	auto DeltaRotator = AimAsRotator - TurretRotator;
+	// If Barrel Mesh Direction != Aim Direction
+	Turret->Rotate(DeltaRotator.Yaw);
 }
