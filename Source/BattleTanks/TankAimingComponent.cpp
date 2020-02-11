@@ -36,9 +36,10 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 
 	if (bHaveAimSolution)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("TIME: %f Aim solution found!!"), Time);
+		//UE_LOG(LogTemp, Warning, TEXT("TIME: %f Aim solution found!!"), Time);
 		//Calculate the OutLaunchVelocity
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
+		MoveTurret(AimDirection);
 		MoveBarrel(AimDirection);
 
 	}
@@ -69,9 +70,18 @@ void UTankAimingComponent::MoveBarrel(FVector AimDirection)
 
 void UTankAimingComponent::MoveTurret(FVector AimDirection)
 {
+	UE_LOG(LogTemp, Warning, TEXT("-------------------------"));
 	auto TurretRotator = Turret->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - TurretRotator;
 	// If Barrel Mesh Direction != Aim Direction
+
+	// If Yaw switches signs and the rotation would go in opposite direction, flip sign before rotating
+	if (FMath::Abs(DeltaRotator.Yaw) > 180.F)
+	{
+		DeltaRotator.Yaw = -1.F * DeltaRotator.Yaw;
+	} 
+
 	Turret->Rotate(DeltaRotator.Yaw);
+	UE_LOG(LogTemp, Warning, TEXT("-------------------------"));
 }
