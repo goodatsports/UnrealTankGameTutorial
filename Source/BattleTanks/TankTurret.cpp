@@ -6,8 +6,7 @@
 // Rotate Turret Mesh Component some amount towards Aim Direction
 void UTankTurret::Rotate(float RelativeSpeed)
 {
-	UE_LOG(LogTemp, Warning, TEXT("OLD ROTATION: %f"), RelativeRotation.Yaw);
-
+	RelativeSpeed = FMath::Clamp<float>(RelativeSpeed, -1, +1);
 	auto RotationChange = RelativeSpeed * MaxRotationPerSecond * GetWorld()->DeltaTimeSeconds;
 	auto NewRotation = RelativeRotation.Yaw + RotationChange;
 	SetRelativeRotation(FRotator(0, NewRotation, 0));

@@ -11,7 +11,7 @@
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
 {
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
@@ -36,7 +36,6 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 
 	if (bHaveAimSolution)
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("TIME: %f Aim solution found!!"), Time);
 		//Calculate the OutLaunchVelocity
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveTurret(AimDirection);
@@ -70,7 +69,6 @@ void UTankAimingComponent::MoveBarrel(FVector AimDirection)
 
 void UTankAimingComponent::MoveTurret(FVector AimDirection)
 {
-	UE_LOG(LogTemp, Warning, TEXT("-------------------------"));
 	auto TurretRotator = Turret->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - TurretRotator;
@@ -83,5 +81,4 @@ void UTankAimingComponent::MoveTurret(FVector AimDirection)
 	} 
 
 	Turret->Rotate(DeltaRotator.Yaw);
-	UE_LOG(LogTemp, Warning, TEXT("-------------------------"));
 }
