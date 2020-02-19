@@ -14,8 +14,8 @@ class BATTLETANKS_API ATankAIController : public AAIController
 	GENERATED_BODY()
 public:
 	void BeginPlay() override;
-	ATank* ControlledTank;
-	ATank* PlayerTank;
+	ATank* ControlledTank = nullptr;
+	ATank* PlayerTank = nullptr;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
